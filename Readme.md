@@ -39,12 +39,16 @@ kubectl apply -f k8s/pv-test.yaml
 http://localhost:5000
 
 # This will increment counter by 10 whenever the above is relaunched/refreshed.
-
-kubectl exec -it dataaccess /bin/sh
+curl http://localhost:5000
 
 # use pv-test to launch/exec shell and check counters
 
-# Test by bouncing/deleting pods
+kubectl exec -it dataaccess /bin/sh
+
+# Test by bouncing/deleting pods using kubectl or mgmnt console 
+
+kubectl pod <> 
+
 # New pods will reconnect and continue counting from before
 
 #####################################################################################################
