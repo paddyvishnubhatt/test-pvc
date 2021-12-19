@@ -1,9 +1,9 @@
+# Download git and use it to clone this repo
 
 1. Download k8s cluster manager e.g. Docker
 2. Docker on a laptop is best to start with to get you commands to create images and manage them
-3. Download kubectl, kops, kubeadm to manage k8s cluster and apps
-4. Download git
-5. Some of the commands are built for zsh (but w/ a few tweaks can work w/ bash also)
+3. Download kubectl, kops, kubeadm to manage k8s cluster and apps (kops - if youre using AWS, GCE or external cloud infra, else kubectl will do)
+4. Some of the commands are built for zsh (but w/ a few tweaks can work w/ bash also)
 
 #####################################################################################################
 
