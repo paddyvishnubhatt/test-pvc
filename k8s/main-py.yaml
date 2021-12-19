@@ -1,0 +1,29 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: main-python
+spec:
+  selector:
+    matchLabels:
+      app: main-python
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: main-python
+    spec:
+      volumes:
+      - name: task-pv-storage
+        persistentVolumeClaim:
+          claimName: task-pv-claim
+      containers:
+      - name: main-python
+        image: main-python:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000
+          name: "flask"
+        volumeMounts:
+        - mountPath: "/mnt/counters"
+          name: task-pv-storage
