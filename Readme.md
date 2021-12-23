@@ -71,3 +71,11 @@ SECRET_NAME=$(kubectl get secrets | grep ^default | cut -f1 -d ' ')
 TOKEN=$(kubectl describe secret $SECRET_NAME | grep -E '^token' | cut -f2 -d':' | tr -d " ")
 echo $TOKEN
 
+#####################################################################################################
+# W/ NFS
+kubectl apply -f k8s/nfs-pv-vol.yaml 
+kubectl apply -f k8s/nfs-pv-claim.yaml 
+kubectl apply -f k8s/nfs-pv-test.yaml
+# To test
+kubectl exec -it nfs-dataaccess /bin/sh
+cat /mnt/data/counter.txt
