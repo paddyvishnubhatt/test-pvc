@@ -73,9 +73,24 @@ echo $TOKEN
 
 #####################################################################################################
 # W/ NFS
+#####################################################################################################
+
+# Setup NFS Server (ubuntu)
+/etc/exports
+>>>/srv/data     *(rw,fsid=0,async,no_subtree_check,no_auth_nlm,insecure,no_root_squash)
+exportfs -ra
+
+# Test nfs mount from MAC
+ mount  -t nfs -o resvport,nfsvers=4 10.0.0.228:/srv/data mnt/data
+
+# Setup K8s w/ NFS mounts
 kubectl apply -f k8s/nfs-pv-vol.yaml 
 kubectl apply -f k8s/nfs-pv-claim.yaml 
 kubectl apply -f k8s/nfs-pv-test.yaml
-# To test
+
+# Test NFS (make sure k8s test pod is able to see the mount point)
 kubectl exec -it nfs-dataaccess /bin/sh
+
+# Test app like above
+curl http://localhost:5000
 cat /mnt/data/counter.txt
