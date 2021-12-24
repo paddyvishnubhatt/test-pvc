@@ -76,6 +76,7 @@ echo $TOKEN
 #####################################################################################################
 
 # Setup NFS Server (ubuntu)
+ssh testuser@10.0.0.228/testuser (this has sudo)
 /etc/exports
 >>>/srv/data     *(rw,fsid=0,async,no_subtree_check,no_auth_nlm,insecure,no_root_squash)
 exportfs -ra
