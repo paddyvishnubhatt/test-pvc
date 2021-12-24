@@ -81,6 +81,19 @@ ssh testuser@10.0.0.228/testuser (this has sudo)
 >>>/srv/data     *(rw,fsid=0,async,no_subtree_check,no_auth_nlm,insecure,no_root_squash)
 exportfs -ra
 
+# Setup NFS server (raspberry pi)
+
+ssh pi@10.0.0.52/<usual> (this has sudo)
+/etc/exports
+>>>/srv/data     *(rw,fsid=0,async,no_subtree_check,no_auth_nlm,insecure,no_root_squash)
+exportfs -ra
+
+# Install/setup NFS server on raspberry pi
+apt update
+apt full-upgrade
+apt-get install nfs-kernel-server
+systemctl start nfs-kernel-server.service
+
 # Test nfs mount from MAC
  mount  -t nfs -o resvport,nfsvers=4 10.0.0.228:/srv/data mnt/data
 
