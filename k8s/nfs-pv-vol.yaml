@@ -15,4 +15,4 @@ spec:
     - nfsvers=4
   nfs:
     path: /srv/data
-    server: 10.0.0.228
+    server: 10.0.0.52
