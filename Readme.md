@@ -88,6 +88,11 @@ ssh pi@10.0.0.52/<usual> (this has sudo)
 >>>/srv/data     *(rw,fsid=0,async,no_subtree_check,no_auth_nlm,insecure,no_root_squash)
 exportfs -ra
 
+# Raspberry pi - get buster
+/etc/apt/sources.list
+deb http://raspbian.raspberrypi.org/raspbian/ buster main contrib non-free rpi
+deb http://archive.raspberrypi.org/debian/ buster main
+
 # Install/setup NFS server on raspberry pi
 apt update
 apt full-upgrade
