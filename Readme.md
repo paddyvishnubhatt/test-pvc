@@ -7,6 +7,11 @@
 
 #####################################################################################################
 
+# Functionally test app
+python app/main.py 
+
+curl http://localhost:5000
+
 # Build the docker image for python
 docker build -f docker/Dockerfile -t main-python:latest .
 
