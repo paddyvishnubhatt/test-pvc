@@ -74,17 +74,18 @@ kubectl apply -f k8s/reset-service.yaml
 http://localhost:5000
 
 # Get Counters
+curl http://localhost:6000/counter/get/get -> Internal microservice
 curl http://localhost:5000
 curl http://localhost:5000/counter/main
 curl http://localhost:5000/counter/get
 
 # Roll Counters
-curl -X PUT http://localhost:8000/counter/roll/roll
+curl -X PUT http://localhost:8000/counter/roll/roll -> Internal microservice
 curl -X PUT http://localhost:5000/counter/roll
 
 # Reset Counters
-curl -X PUT http://localhost:7000/counter/reset/reset
-curl -X PUT http://localhost:5000/counter/reset
+curl -X PUT http://localhost:7000/counter/reset/reset -> Internal microservice
+curl -X PUT http://localhost:5000/counter/reset 
 
 # use pv-test to launch/exec shell and check counters
 
