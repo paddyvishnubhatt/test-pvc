@@ -1,4 +1,6 @@
 import time
+import sys
+sys.path.append('/app/common')
 
 from common import get_counter, get_file
 

@@ -1,6 +1,10 @@
 from flask import Flask
 app = Flask(__name__)
 
+import sys
+sys.path.append('/app/reset')
+sys.path.append('/app/get')
+sys.path.append('/app/roll')
 
 from reset import RESET_counter
 from get import GET_counter

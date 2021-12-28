@@ -2,7 +2,9 @@ FROM python:2.7.16
 
 RUN mkdir /app
 WORKDIR /app
-ADD app /app/
+ADD app/common /app/common
+ADD app/main /app/main
+
 RUN pip install -r requirements.txt
 
 EXPOSE 5000
