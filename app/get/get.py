@@ -9,7 +9,7 @@ from common import get_counter
 def GET_counter():
 	return str(get_counter())
 
-@app.route("/counter/get/get")
+@app.route("/counter/get/get", methods=["GET"])
 def app_get_counter():
 	return GET_counter()
 

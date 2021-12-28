@@ -97,6 +97,12 @@ kubectl pod <>
 
 # New pods will reconnect and continue counting from before
 
+# Tailing logs
+kubectl logs -f -n default -l app=main-python
+kubectl logs -f -n default -l app=get-python
+kubectl logs -f -n default -l app=roll-python
+kubectl logs -f -n default -l app=reset-python
+
 #####################################################################################################
 # Creates mgmtn console
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.4.0/aio/deploy/recommended.yaml
@@ -159,3 +165,17 @@ kubectl exec -it nfs-dataaccess /bin/sh
 # Test app like above
 curl http://localhost:5000
 cat /mnt/data/counter.txt
+
+#####################################################################################################
+# W/ Service Mesh istio
+#####################################################################################################
+
+kubectl label namespace default istio-injection=enabled
+
+export INGRESS_HOST=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].port}')
+export SECURE_INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="https")].port}')
+export GATEWAY_URL=$INGRESS_HOST:$INGRESS_PORT
+
+
+
