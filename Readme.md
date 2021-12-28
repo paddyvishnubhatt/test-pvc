@@ -13,10 +13,16 @@ python app/main.py
 curl http://localhost:5000
 
 # Build the docker image for main-python
-docker build -f docker/Dockerfile -t main-python:latest .
+docker build -f docker/Main_Dockerfile -t nfs-main-python:latest .
 
 # Build the docker image for get-python
 docker build -f docker/Get_Dockerfile -t get-python:latest .
+
+# Build the docker image for roll-python
+docker build -f docker/Roll_Dockerfile -t roll-python:latest .
+
+# Build the docker image for reset-python
+docker build -f docker/Reset_Dockerfile -t reset-python:latest .
 
 # List the image
 docker image ls
@@ -36,18 +42,49 @@ kubectl apply -f k8s/pv-vol.yaml
 kubectl apply -f k8s/pv-claim.yaml
 
 # Deploy main-py
-kubectl apply -f k8s/main-py.yaml
+kubectl apply -f k8s/nfs-main-py.yaml
 
 # Launch pod to test pv
 kubectl apply -f k8s/pv-test.yaml 
 
+# Launch pod for get counter
+kubectl apply -f k8s/get-py.yaml
+
+# Launch pod for roll counter
+kubectl apply -f k8s/roll-py.yaml
+
+# Launch pod for reset counter
+kubectl apply -f k8s/reset-py.yaml
+
+# Start service for main
+kubectl apply -f k8s/service.yaml
+
+# Start service for get counter
+kubectl apply -f k8s/get-service.yaml
+
+# Start service for roll counters
+kubectl apply -f k8s/roll-service.yaml
+
+# Start service for reset counter
+kubectl apply -f k8s/reset-service.yaml
+
 
 #####################################################################################################
-# Test app
+# Test app  this will get the counters
 http://localhost:5000
 
-# This will increment counter by 10 whenever the above is relaunched/refreshed.
+# Get Counters
 curl http://localhost:5000
+curl http://localhost:5000/counter/main
+curl http://localhost:5000/counter/get
+
+# Roll Counters
+curl -X PUT http://localhost:8000/counter/roll/roll
+curl -X PUT http://localhost:5000/counter/roll
+
+# Reset Counters
+curl -X PUT http://localhost:7000/counter/reset/reset
+curl -X PUT http://localhost:5000/counter/reset
 
 # use pv-test to launch/exec shell and check counters
 
