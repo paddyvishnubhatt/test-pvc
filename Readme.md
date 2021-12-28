@@ -12,8 +12,11 @@ python app/main.py
 
 curl http://localhost:5000
 
-# Build the docker image for python
+# Build the docker image for main-python
 docker build -f docker/Dockerfile -t main-python:latest .
+
+# Build the docker image for get-python
+docker build -f docker/Get_Dockerfile -t get-python:latest .
 
 # List the image
 docker image ls
