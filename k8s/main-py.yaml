@@ -2,10 +2,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: main-python-v1
+  labels:
+    app: main-python
+    version: v1
 spec:
   selector:
     matchLabels:
       app: main-python
+      version: v1
   replicas: 1
   template:
     metadata:
@@ -32,16 +36,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: main-python-v2
+  labels:
+    app: main-python
+    version: v2
 spec:
   selector:
     matchLabels:
       app: main-python
+      version: v2
   replicas: 1
   template:
     metadata:
       labels:
         app: main-python
-        verison: v2
+        version: v2
     spec:
       volumes:
       - name: nfs-pv-storage
