@@ -23,7 +23,7 @@ def ROLL_counter(increment):
 def app_roll_counter():
     data = request.form
     increment = 10
-    app.logger.info("In app_roll_counter " + str(data))    
+    #app.logger.info("In app_roll_counter " + str(data))    
     if data is not None:
         inc = data.get("increment")
         if inc is not None:
