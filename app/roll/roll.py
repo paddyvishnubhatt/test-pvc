@@ -4,6 +4,8 @@ app = Flask(__name__)
 
 import sys
 sys.path.append('/app/common')
+import logging
+logging.basicConfig(level=logging.INFO)
 
 from common import get_counter, get_file
 
@@ -21,10 +23,12 @@ def ROLL_counter(increment):
 def app_roll_counter():
     data = request.form
     increment = 10
+    app.logger.info("In app_roll_counter " + str(data))    
     if data is not None:
         inc = data.get("increment")
         if inc is not None:
             increment = int(inc)
+    app.logger.info("In app_roll_counter " + str(increment))
     return ROLL_counter(increment)
 
 if __name__ == "__main__":

@@ -2,7 +2,9 @@ from flask import request,Flask
 app = Flask(__name__)
 
 import requests
+import logging
 import json
+logging.basicConfig(level=logging.INFO)
 
 @app.route("/counter/reset", methods=["PUT","POST"])
 def app_main_reset_counter():
@@ -13,8 +15,8 @@ def app_main_reset_counter():
 @app.route("/counter/roll", methods=["PUT","POST"])
 def app_main_roll_counter():
     api_url = "http://roll-python-service:5000/counter/roll/roll"
-    print("In 2.0")
-    response = requests.put(api_url, data=request.form)
+    body = {"increment": "2"}
+    response = requests.post(api_url, data=body)
     return str(response.json())
     
 
@@ -23,6 +25,7 @@ def app_main_roll_counter():
 @app.route("/counter", methods=["GET"])
 @app.route("/")
 def app_main_get_counter():
+    app.logger.info("In app_main_get_counter v2")
     api_url = "http://get-python-service:5000/counter/get/get"
     response = requests.get(api_url)
     return str(response.json())
