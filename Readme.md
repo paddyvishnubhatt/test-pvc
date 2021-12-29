@@ -185,3 +185,12 @@ export GATEWAY_URL=$INGRESS_HOST:$INGRESS_PORT
 curl localhost/counter/get
 curl -X PUT localhost/counter/roll
 curl localhost/counter/get
+
+# Testing Canary w/ Service mesh - roll. Tail / follow the roll-logs to spot incr 10 vs 2
+for i in $(seq 1 100); do curl -s -X PUT "http://localhost/counter/roll"; echo "\n"; done
+kubectl logs -f -n default -l app=roll-python
+
+# Testing Canary w/ Service mesh - get. Tail / follow the main's get-logs to spot v2 api/logs
+for i in $(seq 1 100); do curl -s "http://localhost/counter/get"; echo "\n"; done
+kubectl logs -f -n default -l app=main-python
+
