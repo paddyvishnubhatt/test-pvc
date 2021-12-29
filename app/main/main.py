@@ -1,7 +1,8 @@
-from flask import Flask
+from flask import request,Flask
 app = Flask(__name__)
 
 import requests
+import json
 
 @app.route("/counter/reset", methods=["PUT","POST"])
 def app_main_reset_counter():
@@ -12,8 +13,10 @@ def app_main_reset_counter():
 @app.route("/counter/roll", methods=["PUT","POST"])
 def app_main_roll_counter():
     api_url = "http://roll-python-service:5000/counter/roll/roll"
-    response = requests.put(api_url)
+    print("In 2.0")
+    response = requests.put(api_url, data=request.form)
     return str(response.json())
+    
 
 @app.route("/counter/main", methods=["GET"])
 @app.route("/counter/get", methods=["GET"])

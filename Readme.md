@@ -93,7 +93,10 @@ kubectl exec -it dataaccess /bin/sh
 
 # Test by bouncing/deleting pods using kubectl or mgmnt console 
 
-kubectl pod <> 
+kubectl delete pod -l app=main-python
+kubectl delete pod -l app=get-python
+kubectl delete pod-l app=roll-python
+kubectl delete pod -l app=reset-python
 
 # New pods will reconnect and continue counting from before
 
@@ -177,5 +180,8 @@ export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -
 export SECURE_INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="https")].port}')
 export GATEWAY_URL=$INGRESS_HOST:$INGRESS_PORT
 
+# Testing w/ Service mesh
 
-
+curl localhost/counter/get
+curl -X PUT localhost/counter/roll
+curl localhost/counter/get

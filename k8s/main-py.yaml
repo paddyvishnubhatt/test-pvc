@@ -1,8 +1,7 @@
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: main-python
+  name: main-python-v1
 spec:
   selector:
     matchLabels:
@@ -12,6 +11,7 @@ spec:
     metadata:
       labels:
         app: main-python
+        version: v1
     spec:
       volumes:
       - name: nfs-pv-storage
@@ -19,7 +19,37 @@ spec:
           claimName: nfs-pv-claim
       containers:
       - name: main-python
-        image: main-python:latest
+        image: main-python:1.0
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000
+          name: "flask"
+        volumeMounts:
+        - mountPath: "/mnt/counters"
+          name: nfs-pv-storage
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: main-python-v2
+spec:
+  selector:
+    matchLabels:
+      app: main-python
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: main-python
+        verison: v2
+    spec:
+      volumes:
+      - name: nfs-pv-storage
+        persistentVolumeClaim:
+          claimName: nfs-pv-claim
+      containers:
+      - name: main-python
+        image: main-python:2.0
         imagePullPolicy: Never
         ports:
         - containerPort: 5000
