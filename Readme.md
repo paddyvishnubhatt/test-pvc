@@ -173,6 +173,8 @@ cat /mnt/data/counter.txt
 # W/ Service Mesh istio
 #####################################################################################################
 
+kubectl apply -f sample/addons (this will install all)
+
 kubectl label namespace default istio-injection=enabled
 
 export INGRESS_HOST=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
@@ -185,6 +187,19 @@ export GATEWAY_URL=$INGRESS_HOST:$INGRESS_PORT
 curl localhost/counter/get
 curl -X PUT localhost/counter/roll
 curl localhost/counter/get
+
+
+# Launch Kiali dashboard
+istioctl dashboard kiali
+kubectl -n istio-system port-forward service/kiali 20001:20001
+
+# Launch grafana
+istioctl dashboard grafana
+kubectl -n istio-system port-forward service/grafana 3000:3000
+
+# Launch prometheus
+istioctl dashboard prometheus
+kubectl -n istio-system port-forward service/prometheus 9090:9090
 
 # Testing Canary w/ Service mesh - roll. Tail / follow the roll-logs to spot incr 10 vs 2
 for i in $(seq 1 100); do curl -s -X PUT "http://localhost/counter/roll"; echo "\n"; done
@@ -199,8 +214,10 @@ kubectl apply -f k8s/main-gw.yaml
 
 # Two routing modes based headers (header) and percentage of traffic (canary) - both can co-exist
 kubectl apply -f k8s/canary-routing.yaml 
+--
 for i in $(seq 1 100); do curl -s "http://localhost/counter/get"; echo "\n" ;  done
 
 kubectl apply -f k8s/header-routing.yaml 
+--
 curl -H x1-version:v1 localhost/counter/get 
 curl -H x1-version:v2 localhost/counter/get 
