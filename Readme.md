@@ -214,10 +214,11 @@ kubectl apply -f k8s/main-gw.yaml
 
 # Two routing modes based headers (header) and percentage of traffic (canary) - both can co-exist
 kubectl apply -f k8s/canary-routing.yaml 
---
+
 for i in $(seq 1 100); do curl -s "http://localhost/counter/get"; echo "\n" ;  done
 
-kubectl apply -f k8s/header-routing.yaml 
---
-curl -H x1-version:v1 localhost/counter/get 
+kubectl apply -f k8s/header-routing.yaml
+
+curl -H x1-version:v1 localhost/counter/get
+
 curl -H x1-version:v2 localhost/counter/get 
