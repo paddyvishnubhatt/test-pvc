@@ -222,3 +222,5 @@ kubectl apply -f k8s/header-routing.yaml
 curl -H x1-version:v1 localhost/counter/get
 
 curl -H x1-version:v2 localhost/counter/get 
+
+![Scheme](resources/img/Traffic-Shifting.png)
