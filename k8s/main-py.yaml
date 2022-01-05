@@ -65,3 +65,37 @@ spec:
         volumeMounts:
         - mountPath: "/mnt/counters"
           name: nfs-pv-storage
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: main-python-v3
+  labels:
+    app: main-python
+    version: v3
+spec:
+  selector:
+    matchLabels:
+      app: main-python
+      version: v3
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: main-python
+        version: v3
+    spec:
+      volumes:
+      - name: nfs-pv-storage
+        persistentVolumeClaim:
+          claimName: nfs-pv-claim
+      containers:
+      - name: main-python
+        image: main-python:3.0
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000
+          name: "flask"
+        volumeMounts:
+        - mountPath: "/mnt/counters"
+          name: nfs-pv-storage
