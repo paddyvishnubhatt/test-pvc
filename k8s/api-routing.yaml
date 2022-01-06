@@ -10,7 +10,7 @@ spec:
   http:
   - match: 
     - uri:
-        prefix: /counter/get
+        exact: /counter/get
     route:
     - destination:
         host: main-python-service
@@ -19,7 +19,7 @@ spec:
           number: 5000
   - match:
     - uri:
-        prefix: /counter/poll
+        exact: /counter/poll
     route:
     - destination:
         host: main-python-service
@@ -28,7 +28,7 @@ spec:
           number: 5000
   - match:
     - uri:
-        prefix: /counter/reset
+        exact: /counter/reset
     route:
     - destination:
         host: main-python-service
