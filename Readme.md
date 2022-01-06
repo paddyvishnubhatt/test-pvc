@@ -224,3 +224,8 @@ curl -H x1-version:v1 localhost/counter/get
 curl -H x1-version:v2 localhost/counter/get 
 
 ![Scheme](resources/img/Traffic-Shifting.png)
+
+# Three versions - API based routing - get in one version (v1), roll in another (v2) and reset in yet another (v3).
+for i in $(seq 1 100); do curl -s -H x1-version:v2 -X PUT "http://localhost/counter/roll"; curl -s "http://localhost/counter/get"; curl -s -X PUT "http://localhost/counter/reset"; echo "\n" ;  done
+
+![Scheme](resources/img/Traffic-Shifting-1.png)
