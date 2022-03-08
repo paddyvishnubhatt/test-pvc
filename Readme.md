@@ -190,15 +190,15 @@ curl localhost/counter/get
 
 
 # Launch Kiali dashboard
-istioctl dashboard kiali
+istioctl dashboard kiali<br>
 kubectl -n istio-system port-forward service/kiali 20001:20001
 
 # Launch grafana
-istioctl dashboard grafana
+istioctl dashboard grafana<br>
 kubectl -n istio-system port-forward service/grafana 3000:3000
 
 # Launch prometheus
-istioctl dashboard prometheus
+istioctl dashboard prometheus<br>
 kubectl -n istio-system port-forward service/prometheus 9090:9090
 
 # Testing Canary w/ Service mesh - roll. Tail / follow the roll-logs to spot incr 10 vs 2
